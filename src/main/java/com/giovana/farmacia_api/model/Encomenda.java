@@ -19,14 +19,18 @@ public class Encomenda {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medicamento_id")
     private Medicamento medicamento;
+
+    private Integer quantidade;
 
     private OffsetDateTime dataHora;
 
     @Builder
-    public Encomenda( Medicamento medicamento, OffsetDateTime dataHora) {
+    public Encomenda( Medicamento medicamento, Integer quantidade, OffsetDateTime dataHora) {
         this.medicamento = medicamento;
+        this.quantidade = quantidade;
         this.dataHora = dataHora;
     }
 }

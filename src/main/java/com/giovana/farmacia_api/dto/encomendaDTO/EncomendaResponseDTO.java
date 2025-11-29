@@ -16,5 +16,7 @@ public class EncomendaResponseDTO {
 
     private MedicamentoResponseDTO medicamento;
 
+    private Integer quantidade;
+
     private OffsetDateTime dataHora;
 }

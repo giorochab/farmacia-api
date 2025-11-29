@@ -8,6 +8,7 @@ import com.giovana.farmacia_api.model.Encomenda;
 import com.giovana.farmacia_api.model.Medicamento;
 import com.giovana.farmacia_api.repository.EncomendaRepository;
 import com.giovana.farmacia_api.repository.MedicamentoRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,10 @@ public class EncomendaService {
     private final MedicamentoRepository medicamentoRepository;
     private final EncomendaMapper encomendaMapper;
 
+    @Transactional
     public EncomendaResponseDTO saveEncomenda(EncomendaRequestDTO requestDTO) {
-        Medicamento medicamento = medicamentoRepository.findById(requestDTO.getMedicamentoId())
-                .orElseThrow(() -> new NotFoundException("O ID não corresponde a nenhum medicamento."));
+        Medicamento medicamento = medicamentoRepository.findByNomeIgnoreCase(requestDTO.getNomeMedicamento())
+                .orElseThrow(() -> new NotFoundException("O nome não corresponde a nenhum medicamento."));
 
         Encomenda encomenda = encomendaMapper.toEntity(requestDTO);
 
